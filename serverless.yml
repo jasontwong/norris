@@ -4,6 +4,14 @@ provider:
   name: aws
   runtime: python2.7
   profile: serverless
+  environment:
+    ALGOLIA_APP_ID: ${env:ALGOLIA_APP_ID}
+    ALGOLIA_API_KEY: ${env:ALGOLIA_API_KEY}
+
+package:
+  exclude:
+    - "**/*.pyc"
+    - "**/*.swp"
 
 functions:
   norris:

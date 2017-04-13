@@ -15,6 +15,11 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.pyc
 
 # Serverless directories
 .serverless
+
+.envrc
+vendored/*
+!vendored/.gitkeep
