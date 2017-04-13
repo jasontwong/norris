@@ -19,11 +19,12 @@ def _getJokes(query):
 
 def norris(event, context):
     query_params = event.get('queryStringParameters') or {}
-    query = query_params.get('q', '')
+    query = query_params.get('text', '')
     results = _getJokes(query)
     item = random.choice(results['hits'])
     body = {
-        'joke': item['joke']
+        'response_type': 'in_channel',
+        'text': item['joke']
     }
 
     response = {
