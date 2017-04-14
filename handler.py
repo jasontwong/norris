@@ -1,9 +1,15 @@
 import json
 import os
 import random
+import logging
+import urlparse
 import sys
 sys.path.append('vendored')
 from algoliasearch import algoliasearch
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def _getJokes(query):
@@ -17,9 +23,16 @@ def _getJokes(query):
     return jokes.search(query)
 
 
+def _getQuery(event):
+    body = event.get('body') or 'text='
+    params = urlparse.parse_qs(body, True)
+    logger.info('got params{}'.format(params))
+
+    return params['text'].pop()
+
+
 def norris(event, context):
-    query_params = event.get('queryStringParameters') or {}
-    query = query_params.get('text', '')
+    query = _getQuery(event)
     results = _getJokes(query)
     item = random.choice(results['hits'])
     body = {
